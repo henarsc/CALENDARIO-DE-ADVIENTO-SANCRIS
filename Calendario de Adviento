@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de Adviento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .day {
+            padding: 20px;
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            position: relative;
+            font-weight: bold;
+        }
+        .day.locked {
+            background-color: #ddd;
+            cursor: not-allowed;
+            color: #999;
+        }
+        .content {
+            display: none;
+            margin: 20px;
+        }
+        .content h2 {
+            font-size: 24px;
+        }
+        #content-image, #content-video {
+            max-width: 100%;
+            margin-top: 10px;
+        }
+        #content-video {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calendario de Adviento</h1>
+    <div class="calendar">
+        <!-- Generar 24 días -->
+        <div class="day locked" data-day="1">1</div>
+        <div class="day locked" data-day="2">2</div>
+        <div class="day locked" data-day="3">3</div>
+        <div class="day locked" data-day="4">4</div>
+        <div class="day locked" data-day="5">5</div>
+        <div class="day locked" data-day="6">6</div>
+        <div class="day locked" data-day="7">7</div>
+        <div class="day locked" data-day="8">8</div>
+        <div class="day locked" data-day="9">9</div>
+        <div class="day locked" data-day="10">10</div>
+        <div class="day locked" data-day="11">11</div>
+        <div class="day locked" data-day="12">12</div>
+        <div class="day locked" data-day="13">13</div>
+        <div class="day locked" data-day="14">14</div>
+        <div class="day locked" data-day="15">15</div>
+        <div class="day locked" data-day="16">16</div>
+        <div class="day locked" data-day="17">17</div>
+        <div class="day locked" data-day="18">18</div>
+        <div class="day locked" data-day="19">19</div>
+        <div class="day locked" data-day="20">20</div>
+        <div class="day locked" data-day="21">21</div>
+        <div class="day locked" data-day="22">22</div>
+        <div class="day locked" data-day="23">23</div>
+        <div class="day locked" data-day="24">24</div>
+    </div>
+    <div class="content">
+        <h2 id="content-title"></h2>
+        <img id="content-image" alt="">
+        <video id="content-video" controls></video>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const days = document.querySelectorAll('.day');
+            const content = document.querySelector('.content');
+            const contentTitle = document.getElementById('content-title');
+            const contentImage = document.getElementById('content-image');
+            const contentVideo = document.getElementById('content-video');
+            const today = new Date().getDate();
+
+            const contentData = {
+                1: { title: "Día 1", type: "image", src: "path/to/image1.jpg" },
+                2: { title: "Día 2", type: "video", src: "path/to/video2.mp4" },
+                3: { title: "Día 3", type: "image", src: "path/to/image3.jpg" },
+                4: { title: "Día 4", type: "video", src: "path/to/video4.mp4" },
+                // Añade más días según sea necesario
+            };
+
+            days.forEach(day => {
+                const dayNumber = parseInt(day.dataset.day);
+
+                // Desbloquear días según la fecha actual
+                if (dayNumber <= today) {
+                    day.classList.remove('locked');
+                    day.addEventListener('click', () => {
+                        const data = contentData[dayNumber];
+                        if (data) {
+                            contentTitle.textContent = data.title;
+                            if (data.type === "image") {
+                                contentImage.src = data.src;
+                                contentImage.style.display = "block";
+                                contentVideo.style.display = "none";
+                            } else if (data.type === "video") {
+                                contentVideo.src = data.src;
+                                contentVideo.style.display = "block";
+                                contentImage.style.display = "none";
+                            }
+                            content.style.display = "block";
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
